@@ -2,10 +2,11 @@ from fastapi import FastAPI, Depends
 from fastapi_injector import attach_injector
 import uvicorn
 
-from application.security.auth_middleware import AuthService, authMiddleware
-from config.config_service import ConfigService
-from api import backup_api
-from config.config import Config
+from LoggerChroniclesService.api import backup_api
+from LoggerChroniclesService.application.security.auth_middleware import AuthService, authMiddleware
+from LoggerChroniclesService.config.config import Config
+from LoggerChroniclesService.config.config_service import ConfigService
+
 
 
 def start_api(dependency_injector):

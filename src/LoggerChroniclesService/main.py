@@ -4,9 +4,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from injector import Injector
 
-from api import start_api
-from config.config_logging import configure_logging
-from dependencies import Dependencies
+from LoggerChroniclesService.api import start_api
+from LoggerChroniclesService.config.config_logging import configure_logging
+from LoggerChroniclesService.dependencies import Dependencies
+
 
 
 if __name__ == "__main__":

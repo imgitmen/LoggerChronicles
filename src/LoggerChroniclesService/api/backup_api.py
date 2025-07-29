@@ -5,14 +5,11 @@ from fastapi import APIRouter, status, Form
 from injector import inject
 from fastapi_injector import Injected
 
-from application.commands.backup_command_handlers import BackupCommandHandlers
-from application.commands.backup_commands import BackupCommand
+from LoggerChroniclesService.api.backup_models import BackupPostModel
+from LoggerChroniclesService.application.commands.backup_command_handlers import BackupCommandHandlers
+from LoggerChroniclesService.application.commands.backup_commands import BackupCommand
 
-from .backup_models import BackupPostModel
 
-logger = logging.getLogger(
-    f"{__name__}",
-)
 router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)

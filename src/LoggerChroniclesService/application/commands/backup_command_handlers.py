@@ -3,8 +3,8 @@ from pathlib import PurePath
 import aiofiles
 from injector import inject
 
-from application.commands.backup_commands import BackupCommand
-from filesystem_helper import FilesystemHelper
+from LoggerChroniclesService.application.commands.backup_commands import BackupCommand
+from LoggerChroniclesService.filesystem_helper import FilesystemHelper
 
 
 @inject

@@ -3,7 +3,8 @@ import logging
 from pathlib import Path
 
 import yaml
-from .config_service import ConfigService
+
+from LoggerChroniclesService.config.config_service import ConfigService
 
 
 def configure_logging():
