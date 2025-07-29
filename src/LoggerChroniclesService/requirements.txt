@@ -1,0 +1,9 @@
+numpy == 2.3.0
+injector == 0.22.0
+seqlog == 0.4.1
+python-dotenv == 1.1.1
+fastapi == 0.116.1
+fastapi-injector == 0.8.0
+python-multipart == 0.0.20
+aiofiles == 24.1.0
+uvicorn
