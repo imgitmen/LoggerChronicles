@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "LoggerChronicles"
+version = "1.0.0"
+authors = [
+  { name="imgitmen", email="it.smi@socotec.com" },
+]
+description = "Loggers raw data files backup"
+readme = "README.md"
+requires-python = ">=3.12.0"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent"
+]
+
+dependencies = [
+    "numpy==2.3.0",
+    "injector==0.22.0", 
+    "seqlog==0.4.1", 
+    "python-dotenv==1.1.1",
+    "fastapi==0.116.1",
+    "fastapi-injector==0.8.0",
+    "python-multipart==0.0.20", 
+    "aiofiles==24.1.0", 
+    "uvicorn==0.35.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/imgitmen/LoggerChronicles"
