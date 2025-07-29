@@ -6,6 +6,6 @@ from pydantic import BaseModel
 class BackupPostModel(BaseModel):
     loggerTypeCode: Annotated[str, Form()]
     loggerSerial: Annotated[str, Form()]
-    timestamp: datetime
+    timestamp: Annotated[datetime, Form()]
     file: Annotated[UploadFile, File()]
     
