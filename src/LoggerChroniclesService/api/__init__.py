@@ -2,16 +2,17 @@ from fastapi import FastAPI, Depends
 from fastapi_injector import attach_injector
 import uvicorn
 
-from LoggerChroniclesService.api import backup_api
-from LoggerChroniclesService.application.security.auth_middleware import AuthService, authMiddleware
-from LoggerChroniclesService.config.config import Config
-from LoggerChroniclesService.config.config_service import ConfigService
+from api import backup_api
+from application.security.auth_middleware import AuthService, authMiddleware
+from config.config import Config
+from config.config_service import ConfigService
 
 
 
 def start_api(dependency_injector):
     api = FastAPI(docs_url="/api/docs", 
         dependencies=[Depends(authMiddleware(dependency_injector.get(AuthService)))])
+    
     api.include_router(
         backup_api.router, 
         prefix="/api/v1/backup"

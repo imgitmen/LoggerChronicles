@@ -1,9 +1,9 @@
 from pathlib import Path
 from injector import Module, provider, singleton
 
-from LoggerChroniclesService.application.security.auth_middleware import AuthService
-from LoggerChroniclesService.config.config_service import ConfigService
-from LoggerChroniclesService.filesystem_helper import FilesystemHelper
+from application.security.auth_middleware import AuthService
+from config.config_service import ConfigService
+from filesystem_helper import FilesystemHelper
 
 
 

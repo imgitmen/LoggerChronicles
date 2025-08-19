@@ -4,9 +4,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 from injector import Injector
 
-from LoggerChroniclesService.api import start_api
-from LoggerChroniclesService.config.config_logging import configure_logging
-from LoggerChroniclesService.dependencies import Dependencies
+from api import start_api
+from config.config_logging import configure_logging
+from dependencies import Dependencies
 
 
 

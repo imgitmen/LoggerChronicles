@@ -3,8 +3,8 @@ from pathlib import PurePath
 import aiofiles
 from injector import inject
 
-from LoggerChroniclesService.application.commands.backup_commands import BackupCommand
-from LoggerChroniclesService.filesystem_helper import FilesystemHelper
+from application.commands.backup_commands import BackupCommand
+from filesystem_helper import FilesystemHelper
 
 
 @inject
@@ -16,9 +16,9 @@ class BackupCommandHandlers:
     async def backup(self, cmd: BackupCommand) -> str | None: 
         filePath: str | None = None
         
-        backupPath = self.__filesystemHelper.GetBackupPath(cmd.loggerTypeCode, cmd.loggerSerial, cmd.timestamp)
+        backupPath = self.__filesystemHelper.GetBackupPath(cmd.loggerTypeCode.lower(), cmd.loggerSerial.lower(), cmd.timestamp)
         FilesystemHelper.EnsurePath(backupPath)
-        filePath = PurePath(backupPath, cmd.filename)
+        filePath = PurePath(backupPath, cmd.filename.lower())
         
         try:
             async with aiofiles.open(filePath, 'wb') as out_file:
