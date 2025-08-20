@@ -17,7 +17,6 @@ async def download_file(response: Response, queryHandlers: FileQueries = Injecte
     
     if fi is not None:
         mimeType = mimetypes.guess_type(fi.fullPath)
-        print(mimeType[0])
         response.headers["Content-Disposition"] = f"attachment; filename={fi.name}"
         response.headers["Content-Type"] = mimeType[0]
         return FileResponse(str(fi.fullPath), filename=fi.name)
