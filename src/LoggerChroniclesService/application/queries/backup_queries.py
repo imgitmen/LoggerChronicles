@@ -26,8 +26,33 @@ class BackupQueries:
         self.__filesystemHelper = filesystemHelper
         self.__logger = logging.getLogger()    
 
-    async def list(self, qry: BackupQuery) -> list[BackupQueryResultItem]:
+    def __populateItems(self, contents) -> list[BackupQueryResultItem]:
         result = []
+
+        for c in contents:
+            item = BackupQueryResultItem()
+            item.relativePath = c.relativePath
+            item.isfile = c.isFile
+            item.name = os.path.basename(c.relativePath)
+            
+            result.append(item)
+            
+        return result
+
+    async def list_path(self, path) -> list[BackupQueryResultItem] | None :
+        result = None
+        
+        fullPath = PurePath(str(path))
+        
+        contents = self.__filesystemHelper.GetContents(fullPath)
+        
+        if contents is not None:
+            result = self.__populateItems(contents)
+            
+        return result
+
+    async def list(self, qry: BackupQuery) -> list[BackupQueryResultItem] | None :
+        result = None
         
         fullPath = PurePath(qry.loggerTypeCode.lower(), 
                             qry.loggerSerial.lower(), 
@@ -36,37 +61,4 @@ class BackupQueries:
                             qry.day.lower(), 
                             qry.filename.lower())
         
-        contents = self.__filesystemHelper.GetContents(fullPath)
-        
-        for c in contents:
-            item = BackupQueryResultItem()
-            item.fullpath = c.fullPath
-            item.isfile = c.isFile
-            item.name = os.path.basename(c.fullPath)
-            
-            result.append(item)
-            
-        return result
-        
-    async def list_path(self, path):
-        result = []
-        
-        fullPath = PurePath(str(path))
-        
-        contents = self.__filesystemHelper.GetContents(fullPath)
-        
-        for c in contents:
-            item = BackupQueryResultItem()
-            item.relativePath = c.relativePath
-            item.isFile = c.isFile
-            item.name = os.path.basename(c.fullPath)
-                        
-            result.append(item)
-            
-        return result
-        
-        
-        
-        
-        
-        
+        return await self.list(fullPath)

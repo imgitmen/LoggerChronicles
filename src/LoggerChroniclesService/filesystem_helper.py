@@ -26,24 +26,30 @@ class FilesystemHelper():
     def ListDirectories(self, path) -> list[str]:
         return os.listdir(Path.joinpath(self._backupDir, path))
     
-    def GetContents(self, path = None) -> list[PathInfo]:
-        result = []
+    def GetContents(self, path = None) -> list[PathInfo] | None:
+        result = None
+        
         if path is None:
             path = ""
             
         fullpath = Path(self._backupDir, path)
         
         if os.path.exists(fullpath) and fullpath.is_dir():
+            result = []
             for p in os.listdir(fullpath):
                 pi = PathInfo()
-                fullpath = PurePath(fullpath,p)
-                relativePath = "/".join(str(fullpath).replace(self._backupDir, "", 1).split(os.path.sep))
+                itempath = PurePath(fullpath,p)
+                relativePath = "/".join(str(itempath).replace(self._backupDir, "", 1).split(os.path.sep))
                 
                 pi.relativePath = relativePath
-                pi.isFile = Path(fullpath).is_file()
+                pi.isFile = Path(itempath).is_file()
                 result.append(pi)
             
         return result
+    
+    def ConcatenateRelativePath(self, path):
+        return Path(self._backupDir, path)
+        
        
         
     

@@ -18,7 +18,7 @@ router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 @inject
-async def post_data(commandHanlders: BackupCommandHandlers = Injected(BackupCommandHandlers), 
+async def post_file(commandHanlders: BackupCommandHandlers = Injected(BackupCommandHandlers), 
                     data: BackupPostModel = Form(media_type="multipart/form-data") 
                     ):    
         
@@ -34,13 +34,12 @@ async def post_data(commandHanlders: BackupCommandHandlers = Injected(BackupComm
 @router.get("/", status_code=status.HTTP_200_OK)
 @router.get("/{path:path}", status_code=status.HTTP_200_OK)
 @inject
-async def get_data(response: Response, queryHandlers: BackupQueries = Injected(BackupQueries), path: Optional[str] = ""):
+async def navigate(response: Response, queryHandlers: BackupQueries = Injected(BackupQueries), path: Optional[str] = ""):
     
     queryresult = await queryHandlers.list_path(path.strip())
     
-    return JSONResponse(content=jsonable_encoder(queryresult))
+    if queryresult is not None:
+        return JSONResponse(content=jsonable_encoder(queryresult))
+    else:
+        response.status_code = status.HTTP_404_NOT_FOUND
 
-@router.get("/file/{filepath:path}", status_code=status.HTTP_200_OK)
-@inject
-async def download_file(response: Response, queryHandlers: BackupQueries = Injected(BackupQueries), filepath: str = ""):
-    pass
