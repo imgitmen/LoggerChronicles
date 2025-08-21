@@ -49,6 +49,14 @@ class FilesystemHelper():
     
     def ConcatenateRelativePath(self, path):
         return Path(self._backupDir, path)
+    
+    def MakeRelativePath(self, path) -> str | None:
+        result = None
+        if path is not None:
+            result = "/".join(str(path).replace(self._backupDir, "", 1).split(os.path.sep))
+            
+        return result
+        
         
        
         

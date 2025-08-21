@@ -18,10 +18,13 @@ router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 @inject
-async def post_file(commandHanlders: BackupCommandHandlers = Injected(BackupCommandHandlers), 
+async def post_file(response: Response, commandHanlders: BackupCommandHandlers = Injected(BackupCommandHandlers), 
                     data: BackupPostModel = Form(media_type="multipart/form-data") 
                     ):    
-        
+    print("name:" + __name__)
+    logging.getLogger(f"{__name__}").debug("POST Backup endpoint responding with params '{Params}'", Params = data)
+    relativePath = None
+    
     cmd = BackupCommand()
     cmd.loggerTypeCode = data.loggerTypeCode
     cmd.loggerSerial = data.loggerSerial
@@ -29,12 +32,17 @@ async def post_file(commandHanlders: BackupCommandHandlers = Injected(BackupComm
     cmd.fileContents = data.file.file.read()
     cmd.filename = data.file.filename
     
-    await commandHanlders.backup(cmd)
+    relativePath = await commandHanlders.backup(cmd)
+    
+    if relativePath is not None:
+        response.headers["location"] = relativePath
+    
 
 @router.get("/", status_code=status.HTTP_200_OK)
 @router.get("/{path:path}", status_code=status.HTTP_200_OK)
 @inject
 async def navigate(response: Response, queryHandlers: BackupQueries = Injected(BackupQueries), path: Optional[str] = ""):
+    logging.getLogger(f"{__name__}").debug("GET Backup endpoint responding with params '{Params}'", Params = path)
     
     queryresult = await queryHandlers.list_path(path.strip())
     

@@ -1,3 +1,4 @@
+import logging
 import mimetypes
 from fastapi import APIRouter, Response, status, Form, Path
 from fastapi.responses import FileResponse, StreamingResponse
@@ -13,6 +14,8 @@ router = APIRouter()
 @router.get("/{filepath:path}", status_code=status.HTTP_200_OK)
 @inject
 async def download_file(response: Response, queryHandlers: FileQueries = Injected(FileQueries), filepath: str = ""):
+    logging.getLogger(f"{__name__}").debug("GET File endpoint responding with params '{Params}'", Params = filepath)
+
     fi = await queryHandlers.getFile(filepath)
     
     if fi is not None:
