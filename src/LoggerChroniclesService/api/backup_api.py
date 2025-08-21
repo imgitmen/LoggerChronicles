@@ -20,8 +20,7 @@ router = APIRouter()
 @inject
 async def post_file(response: Response, commandHanlders: BackupCommandHandlers = Injected(BackupCommandHandlers), 
                     data: BackupPostModel = Form(media_type="multipart/form-data") 
-                    ):    
-    print("name:" + __name__)
+                    ):
     logging.getLogger(f"{__name__}").debug("POST Backup endpoint responding with params '{Params}'", Params = data)
     relativePath = None
     
