@@ -1,7 +1,6 @@
 import logging
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 from injector import Injector
 
 from api import start_api
@@ -11,9 +10,6 @@ from dependencies import Dependencies
 
 
 if __name__ == "__main__":
-    env_file = Path(os.environ['HOME'], ".env")
-    load_dotenv(env_file)
-
     print('LOGGER_CHRONICLES_HOME: '+ os.environ['LOGGER_CHRONICLES_HOME'])
     
     configure_logging()
