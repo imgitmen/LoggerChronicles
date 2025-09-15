@@ -10,7 +10,10 @@ from config.config_service import ConfigService
 
 
 def start_api(dependency_injector):
-    api = FastAPI(docs_url="/api/docs", 
+    configService = dependency_injector.get(ConfigService)
+    config = Config.load_dict(configService.config)
+
+    api = FastAPI(docs_url="/api/docs", title=config.app_name, 
         dependencies=[Depends(authMiddleware(dependency_injector.get(AuthService)))])
     
     api.include_router(
